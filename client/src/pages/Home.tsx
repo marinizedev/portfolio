@@ -363,7 +363,7 @@ export default function Home() {
                   <span>Conhecer a trajetória</span>
                   <ChevronDown size={16} />
                 </ScrollLink>
-                <a className="button button--resume" href="/curriculo-marinize-santana.pdf" download>
+                <a className="button button--resume" href={`${import.meta.env.BASE_URL}curriculo-marinize-santana.pdf`} download>
                   <span>Baixar currículo</span>
                   <Download size={16} />
                 </a>
