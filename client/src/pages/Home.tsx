@@ -21,14 +21,15 @@ import {
   Compass,
 } from "lucide-react";
 
-const heroImage = "/marinize-hero-aurora.png";
-const ansImage = "/ans-architecture.jpg";
-const financeImage = "/monte-carlo.jpg";
-const igrImage = "/igr-dashboard.jpg";
-const treasuryImage = "/treasury-system.jpg";
-const auroraImage = "/aurora-coffee-bi.jpg";
-const oopImage = "/oop-rental-budget-simulator.jpg";
-const markImage = "/marinize-mark.png";
+const b = import.meta.env.BASE_URL;
+const heroImage = `${b}marinize-hero-aurora.png`;
+const ansImage = `${b}ans-architecture.jpg`;
+const financeImage = `${b}monte-carlo.jpg`;
+const igrImage = `${b}igr-dashboard.jpg`;
+const treasuryImage = `${b}treasury-system.jpg`;
+const auroraImage = `${b}aurora-coffee-bi.jpg`;
+const oopImage = `${b}oop-rental-budget-simulator.jpg`;
+const markImage = `${b}marinize-mark.png`;
 
 const particles = Array.from({ length: 52 }, (_, index) => ({
   left: `${(index * 23 + 7) % 100}%`,
@@ -371,7 +372,7 @@ export default function Home() {
             <div className="hero-side reveal-up reveal-delay-2">
               <div className="profile-photo-container" aria-label="Retrato profissional de Marinize Santana">
                 <div className="hero-photo-wrapper">
-                  <img src="/marinize-foto-profissional.jpg" alt="Marinize Santana" className="w-full h-auto object-cover rounded" />
+                  <img src={`${import.meta.env.BASE_URL}marinize-foto-profissional.jpg`} alt="Marinize Santana" className="profile-photo-img" />
                   </div>
                 <div className="profile-photo-badge">
                   <span className="telemetry-label">área de foco</span>
