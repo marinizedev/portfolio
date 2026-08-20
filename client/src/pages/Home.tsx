@@ -168,24 +168,26 @@ const projectDetails: Record<ProjectKey, ProjectDetail> = {
     link: { label: "abrir repositório", href: "https://github.com/marinizedev/finance-analytics-pipeline" },
   },
   realestate: {
-    eyebrow: "desenvolvimento · simulação imobiliária",
+    eyebrow: "desenvolvimento · aplicação web",
     title: "OOP Rental & Budget Simulator",
-    summary: "Simulador orientado a objetos para projeção de custos e retorno de investimentos imobiliários.",
+    summary: "Aplicação web desenvolvida em Python e Flask para simular orçamentos de aluguel com regras de negócio reais de uma imobiliária.",
     architecture: [
-      "Modelagem orientada a objetos (OOP)",
+      "Modelagem orientada a objetos (OOP )",
       "Regras de negócio encapsuladas",
-      "Cálculos de fluxo de caixa e amortização",
-      "Interface interativa"
+      "Núcleo independente executável via CLI",
+      "Interface web com Flask e deploy no Render"
     ],
-    stack: ["Python", "OOP", "Clean Code", "Pytest", "Streamlit"],
-    decision: "Utilizar princípios estritos de Orientação a Objetos para garantir que cada regra financeira fosse testável e isolada.",
-    outcome: "Simulador flexível, modular e testado com Pytest para cenários de investimento.",
+    stack: ["Python", "Flask", "HTML", "CSS", "JavaScript", "OOP", "Render"],
+    decision: "Separar a lógica de negócio da interface web, mantendo um núcleo orientado a objetos reutilizável via terminal e disponibilizando a aplicação pelo Flask.",
+    outcome: "Aplicação publicada no Render, com execução via navegador ou CLI e geração de relatórios de orçamento em CSV.",
     learnings: [
-      "Classes bem modeladas simplificam a manutenção de regras financeiras complexas.",
-      "Testes unitários garantem que mudanças em juros ou prazos não quebrem o cálculo."
+      "A separação entre a lógica de negócio, a interface web e o deploy tornou a evolução do sistema mais organizada.",
+      "A orientação a objetos ajudou a representar diferentes tipos de imóveis e suas regras específicas.",
+      "Expandir um trabalho acadêmico para uma aplicação web exigiu integrar backend, frontend, experiência do usuário e publicação em produção."
     ],
     link: { label: "abrir repositório", href: "https://github.com/marinizedev/oop-rental-budget-simulator" },
   },
+
 };
 
 const stackGroups = [
@@ -800,7 +802,7 @@ export default function Home() {
                   <div className="case-card__body">
                     <div className="case-topline"><span>desenvolvimento</span><span>Python & OOP</span></div>
                     <h3>Simulador de Orçamento<br /><em>Imobiliário.</em></h3>
-                    <p>Aplicação baseada em POO e Flask com regras de negócio encapsuladas, testes com Pytest e simulação de cenários de investimento.</p>
+                    <p>Aplicação web desenvolvida em Python e Flask, com regras de negócio orientadas a objetos, execução alternativa via CLI e deploy público no Render.</p>
                     <div className="card-link">
                       <a href="https://github.com/marinizedev/oop-rental-budget-simulator" target="_blank" rel="noreferrer">
                         <span>ver repositório</span>
