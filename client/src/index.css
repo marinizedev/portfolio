@@ -418,7 +418,7 @@ button { border: 0; }
 /* Aurora de Dados — superfícies técnicas, hover investigativo e modal de estudos de caso. */
 html { scroll-behavior: smooth; scroll-padding-top: 94px; }
 .project-trigger { position: relative; cursor: pointer; outline: none; box-shadow: 0 10px 30px rgba(15,15,15,.07); }
-.project-trigger::after { content: "abrir detalhes"; position: absolute; right: 18px; bottom: 18px; z-index: 3; padding: 7px 9px; border: 1px solid rgba(232,169,74,.36); background: rgba(15,15,15,.7); color: var(--amber); font: 8px var(--mono); letter-spacing: .08em; text-transform: uppercase; opacity: 0; transform: translateY(5px); transition: opacity .22s var(--ease-out), transform .22s var(--ease-out); pointer-events: none; }
+.project-trigger::after { content: "abrir detalhes"; position: absolute; right: 18px; bottom: 8px; z-index: 3; padding: 7px 9px; border: 1px solid rgba(232,169,74,.36); background: rgba(15,15,15,.7); color: var(--amber); font: 8px var(--mono); letter-spacing: .08em; text-transform: uppercase; opacity: 0; transform: translateY(5px); transition: opacity .22s var(--ease-out), transform .22s var(--ease-out); pointer-events: none; }
 .project-trigger:hover, .project-trigger:focus-visible { transform: translateY(-6px); box-shadow: 0 24px 58px rgba(15,15,15,.2), 0 0 0 1px rgba(232,169,74,.3); }
 .project-trigger:hover::after, .project-trigger:focus-visible::after { opacity: 1; transform: translateY(0); }
 .project-trigger:focus-visible { outline: 2px solid var(--amber); outline-offset: 4px; }
@@ -1106,4 +1106,33 @@ a:focus-visible, button:focus-visible {
     opacity: 1;
     transform: none;
   }
+}
+
+@media (min-width: 1024px) {
+  .featured-case__visual.visual-ans-art {
+    background-size: 100% 100% !important;
+    background-position: center !important;
+  }
+}
+
+/* Ajuste de sobreposição no rodapé do case principal ANS */
+.featured-case .case-footer {
+  display: flex !important;
+  justify-content: space-between !important;
+  align-items: center !important;
+  position: relative !important;
+  z-index: 2 !important;
+}
+
+.featured-case .case-private {
+  display: inline-block !important;
+  position: relative !important;
+  z-index: 1 !important;
+}
+
+.featured-case .case-detail-trigger,
+.featured-case .case-action-btn {
+  position: relative !important;
+  z-index: 3 !important;
+  margin-left: auto !important;
 }
