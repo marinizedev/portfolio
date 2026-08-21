@@ -917,7 +917,7 @@ export default function Home() {
           <div className="container contact-content">
             <div className="contact-kicker"><span className="availability-dot" /> próxima investigação disponível</div>
             <h2 id="contact-title">Tem um problema de dados<br />que merece ser <em>entendido?</em></h2>
-            <p>Estou aberta a conversar sobre estágio, primeira oportunidade formal e projetos em Engenharia de Dados, Analytics Engineering ou Backend de Dados.</p>
+            <p> Estou aberta a conversar sobre estágio e primeira oportunidade formal em Engenharia de Dados, com interesse em Analytics Engineering e soluções de software aplicadas a dados.</p>
             <div className="contact-actions">
               <a className="button button--primary" href="https://www.linkedin.com/in/marinize-santana-47bb2b372" target="_blank" rel="noreferrer">
                 <span>Conversar no LinkedIn</span>
