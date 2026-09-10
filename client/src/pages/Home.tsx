@@ -149,23 +149,25 @@ const projectDetails: Record<ProjectKey, ProjectDetail> = {
     link: { label: "abrir repositório", href: "https://github.com/marinizedev/nonprofit-financial-report-automation" },
   },
   montecarlo: {
-    eyebrow: "engenharia de dados · simulação financeira",
-    title: "Finance Analytics & Monte Carlo Simulation",
-    summary: "Simulação estocástica para análise de risco financeiro e projeção de cenários econômicos com alta robustez.",
+    eyebrow: "engenharia de dados · Python · arquitetura",
+    title: "Finance Analytics Pipeline V2.4",
+    summary: "A evolução de um gerador de fluxo de caixa para uma aplicação modular de análise probabilística e risco financeiro.",
     architecture: [
-      "Geração de distribuições probabilísticas",
-      "Simulação de múltiplos cenários de risco",
-      "Agregação e consolidação com Pandas",
-      "Validação estatística dos resultados"
+      "Domínio modelado com Programação Orientada a Objetos",
+      "EstadoFinanceiro, EstadoEconomico, Transacao e ResultadoSimulacao",
+      "SimuladorFinanceiro separado da análise de Monte Carlo",
+      "GeradorGraficos isolado das regras financeiras",
+      "GeradorGraficos isolado das regras financeiras", "Configurações centralizadas e histórico técnico versionado"
     ],
-    stack: ["Python", "Pandas", "NumPy", "Matplotlib", "Simulação de Monte Carlo"],
-    decision: "Aplicar modelagem estocástica para antecipar variações de mercado e avaliar volatilidade de ativos com rigor estatístico.",
-    outcome: "Modelo preditivo validado com relatórios automatizados de distribuição de probabilidade.",
+    stack: ["Python", "POO", "Pandas", "Monte Carlo", "unittest", "logging", "Matplotlib", "Jupyter Notebook"],
+    decision: "A V1 concentrava regras em funções globais e representava o estado com dicionários. A V2 tornou o domínio explícito, separou responsabilidades e criou uma base mais testável e previsível.",
+    outcome: "Uma aplicação financeira modular, com 15 testes automatizados, cenários reproduzíveis, logging com rotação e regras econômicas parametrizáveis em conf.py.",
     learnings: [
-      "A incerteza pode ser modelada quando tratada com distribuições estatísticas rigorosas.",
-      "Visualizar intervalos de confiança evita decisões baseadas em médias cegas."
+      "Modelar o domínio explicitamente tornou as regras mais fáceis de localizar e evoluir.",
+      "A reprodutibilidade é essencial para investigar resultados de simulações aleatórias.",
+      "O CHANGELOG preserva a história das decisões entre V1, V2 e V2.4."
     ],
-    link: { label: "abrir repositório", href: "https://github.com/marinizedev/finance-analytics-pipeline" },
+    link: { label: "abrir repositório V2.4", href: "https://github.com/marinizedev/finance-analytics-pipeline" },
   },
   realestate: {
     eyebrow: "desenvolvimento · aplicação web",
@@ -770,11 +772,11 @@ export default function Home() {
                   </div>
                   <div className="case-card__body">
                     <div className="case-topline"><span>engenharia de dados</span><span>Monte Carlo</span></div>
-                    <h3>Simulação de Risco<br /><em>Financeiro.</em></h3>
-                    <p>Pipeline analítico aplicando simulação de Monte Carlo para análise de risco e projeções financeiras complexas com rigor estatístico.</p>
+                    <h3>Da simulação<br /><em>ao domínio.</em></h3>
+                    <p>Evolução de um simulador financeiro para uma aplicação modular com POO, 15 testes automatizados, logging, reprodutibilidade e regras parametrizáveis.</p>
                     <div className="card-link">
                       <a href="https://github.com/marinizedev/finance-analytics-pipeline" target="_blank" rel="noreferrer">
-                        <span>ver repositório</span>
+                        <span>ver repositório v2.4</span>
                         <Github size={14} />
                       </a>
                     </div>
