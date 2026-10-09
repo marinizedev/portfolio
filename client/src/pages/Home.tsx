@@ -29,6 +29,7 @@ const igrImage = `${b}igr-dashboard.jpg`;
 const treasuryImage = `${b}treasury-system.jpg`;
 const auroraImage = `${b}aurora-coffee-bi.jpg`;
 const oopImage = `${b}oop-rental-budget-simulator.jpg`;
+const stockflowImage = `${b}stockflow-dashboard.jfif`;
 const markImage = `${b}marinize-mark.png`;
 
 const particles = Array.from({ length: 52 }, (_, index) => ({
@@ -48,7 +49,7 @@ const navItems = [
 ];
 
 type ProjectFilter = "all" | "data-engineering" | "data-analysis" | "development";
-type ProjectKey = "ans" | "igr" | "aurora" | "treasury" | "montecarlo" | "realestate";
+type ProjectKey = "ans" | "igr" | "aurora" | "treasury" | "montecarlo" | "realestate" | "stockflow";
 
 type ProjectDetail = {
   eyebrow: string;
@@ -84,26 +85,41 @@ const projectDetails: Record<ProjectKey, ProjectDetail> = {
     ],
     link: { label: "ver primeiro repositório", href: "https://github.com/marinizedev/data-pipeline-fastapi-ans" },
   },
-  igr: {
-    eyebrow: "análise de dados · Data Storytelling",
+    igr: {
+    eyebrow: "analytics engineering · data storytelling",
     title: "ANS Complaints Insights",
-    summary: "Um projeto independente para transformar 151.501 registros de reclamações em uma narrativa analítica confiável.",
+    summary: "Uma investigação analítica sobre reclamações de planos de saúde no Brasil, transformando 151.501 registros públicos em uma narrativa orientada por evidências.",
     architecture: [
-      "Extração e preparação do arquivo oficial da ANS",
-      "EDA com validação de tipos, nulos e duplicidades",
-      "Cálculo do IGR com investigação metodológica",
+      "Coleta e entendimento dos dados públicos da ANS",
+      "Limpeza, padronização e processamento com Pandas",
+      "EDA com validação de tipos, nulos, duplicidades e hipóteses",
+      "Revisão metodológica do IGR agregado por carteira de beneficiários",
       "Dashboard interativo com Streamlit e Plotly",
-      "Testes de regras de negócio e Integração Contínua"
+      "Testes automatizados, containerização e CI/CD com deploy contínuo"
     ],
-    stack: ["Python", "Pandas", "Streamlit", "Plotly", "Pytest", "GitHub Actions", "Deploy contínuo"],
-    decision: "A metodologia inicialmente encontrada para o IGR não sustentava uma análise confiável. Ela foi investigada, corrigida e documentada sem apagar o caminho anterior.",
-    outcome: "Um dashboard público em que a confiança da narrativa nasce antes da visualização.",
+    stack: [
+      "Python",
+      "Pandas",
+      "Streamlit",
+      "Plotly",
+      "Pytest",
+      "Docker",
+      "GitHub Actions",
+      "Git LFS",
+      "Hugging Face Spaces"
+    ],
+    decision: "A investigação mostrou que a média simples dos índices individuais não representava adequadamente o IGR agregado. O cálculo foi revisado para utilizar a soma das reclamações dividida pela soma dos beneficiários, mantendo a unidade oficial de 100.000 beneficiários.",
+    outcome: "Um dashboard público e reproduzível, com análise histórica de 2015 a 2026, documentação metodológica, testes automatizados, execução em Docker e pipeline de CI/CD.",
     learnings: [
-      "Uma visualização estranha pode revelar uma pergunta melhor.",
-      "Corrigir uma metodologia sem apagar o caminho anterior fortalece a confiabilidade da análise.",
-      "Um dashboard só comunica bem quando a base e as hipóteses foram validadas antes."
+      "Uma visualização inesperada pode revelar um problema metodológico, não apenas um problema visual.",
+      "A qualidade da análise depende da compreensão da granularidade, da unidade de medida e das limitações da fonte.",
+      "Hipóteses exploratórias precisam ser apresentadas com responsabilidade, sem transformar associação em causalidade.",
+      "Uma solução analítica confiável precisa conectar dados, documentação, testes, containerização e deploy."
     ],
-    link: { label: "abrir projeto publicado", href: "https://huggingface.co/spaces/marinizeeng/ans-complaints-insights" },
+    link: {
+      label: "abrir repositório atualizado",
+      href: "https://github.com/marinizedev/ans-complaints-insights"
+    },
   },
   aurora: {
     eyebrow: "desenvolvimento · Analytics Engineering",
@@ -157,7 +173,7 @@ const projectDetails: Record<ProjectKey, ProjectDetail> = {
       "EstadoFinanceiro, EstadoEconomico, Transacao e ResultadoSimulacao",
       "SimuladorFinanceiro separado da análise de Monte Carlo",
       "GeradorGraficos isolado das regras financeiras",
-      "GeradorGraficos isolado das regras financeiras", "Configurações centralizadas e histórico técnico versionado"
+      "Configurações centralizadas e histórico técnico versionado"
     ],
     stack: ["Python", "POO", "Pandas", "Monte Carlo", "unittest", "logging", "Matplotlib", "Jupyter Notebook"],
     decision: "A V1 concentrava regras em funções globais e representava o estado com dicionários. A V2 tornou o domínio explícito, separou responsabilidades e criou uma base mais testável e previsível.",
@@ -188,6 +204,41 @@ const projectDetails: Record<ProjectKey, ProjectDetail> = {
       "Expandir um trabalho acadêmico para uma aplicação web exigiu integrar backend, frontend, experiência do usuário e publicação em produção."
     ],
     link: { label: "abrir repositório", href: "https://github.com/marinizedev/oop-rental-budget-simulator" },
+  },
+
+    stockflow: {
+    eyebrow: "desenvolvimento · aplicação web · confiabilidade",
+    title: "StockFlow",
+    summary: "A evolução de uma aplicação acadêmica local para um sistema web público de controle de estoque, com foco em integridade, segurança e confiabilidade operacional.",
+    architecture: [
+      "Autenticação e autorização por perfil de usuário",
+      "Persistência local com SQLite e ambiente publicado com PostgreSQL",
+      "Regras transacionais para entradas, saídas e prevenção de estoque negativo",
+      "Testes automatizados das principais regras de negócio",
+      "CI/CD com validações, auditoria de dependências e smoke test pós-deploy"
+    ],
+    stack: [
+      "Python",
+      "Flask",
+      "SQLAlchemy",
+      "PostgreSQL",
+      "Pytest",
+      "GitHub Actions",
+      "Render",
+      "Neon"
+    ],
+    decision: "A aplicação foi evoluída sem abandonar as regras de negócio originais. A separação entre configuração local e produção permitiu manter o SQLite para execução local e utilizar PostgreSQL no ambiente publicado.",
+    outcome: "Um sistema público funcional, com autenticação, controle de acesso, proteção CSRF, senhas armazenadas com hash, testes automatizados e perfil DEMO somente para leitura.",
+    learnings: [
+      "Um projeto acadêmico pode se tornar uma aplicação de portfólio quando recebe tratamento de produção.",
+      "Integridade de dados depende tanto das regras de negócio quanto das transações e validações.",
+      "Deploy, testes, segurança e documentação fazem parte do produto final.",
+      "A experiência de quem acessa a aplicação também precisa ser considerada na arquitetura."
+    ],
+    link: {
+      label: "abrir aplicação publicada",
+      href: "https://stockflow-inventory-system-zaqc.onrender.com"
+    }
   },
 
 };
@@ -476,7 +527,7 @@ export default function Home() {
                 <div className="timeline-meta"><span>evolução</span><span>+4 meses</span></div>
                 <div className="timeline-body">
                   <h3>Quando o ambiente respondeu</h3>
-                  <p>Docker, Compose, Pytest, Spark, logs e GitHub Actions entraram como aprendizado aplicado. A containerização revelou defeitos no banco e no ETL que antes passavam despercebidos.</p>
+                  <p>Docker, Compose, Pytest, PySpark, logs e GitHub Actions entraram como aprendizado aplicado. A containerização revelou defeitos no banco e no ETL que antes passavam despercebidos.</p>
                   <span className="timeline-tag">confiabilidade · observabilidade</span>
                 </div>
               </article>
@@ -524,10 +575,10 @@ export default function Home() {
         <section className="portfolio-metrics-section" aria-label="Indicadores e Impacto Real">
           <div className="container metrics-grid">
             <div className="metric-card">
-              <div className="metric-value">06</div>
+              <div className="metric-value">07</div>
               <div className="metric-label">Cases de Engenharia</div>
               <div className="metric-desc">
-                Arquiteturas dimensionais, processamento híbrido e simulações estocásticas.
+                Pipelines, aplicações web, arquiteturas dimensionais e simulações estocásticas.
               </div>
             </div>
 
@@ -679,9 +730,9 @@ export default function Home() {
                     <span className="case-number">02</span>
                   </div>
                   <div className="case-card__body">
-                    <div className="case-topline"><span>análise de dados</span><span>ANS · IGR</span></div>
+                    <div className="case-topline"><span>analytics engineering</span><span>ANS · IGR</span></div>
                     <h3>Quando o dashboard<br /><em>não era o fim.</em></h3>
-                    <p>Projeto de Data Storytelling independente, atualizado com Pandas, Streamlit e Plotly: 151.501 registros, EDA aprofundada, correção metodológica do IGR, testes de regras de negócio, GitHub Actions e deploy contínuo.</p>
+                    <p>Investigação analítica sobre 151.501 registros da ANS, com EDA, revisão metodológica do IGR, dashboard em Streamlit e Plotly, testes automatizados, Docker, GitHub Actions e deploy contínuo.</p>
                     <div className="card-link">
                       <a href="https://huggingface.co/spaces/marinizeeng/ans-complaints-insights" target="_blank" rel="noreferrer">
                         <span>ver projeto publicado</span>
@@ -753,6 +804,65 @@ export default function Home() {
                 </article>
               )}
 
+              {shouldShowProject("development") && (
+                <article
+                  className="case-card project-trigger"
+                  role="button"
+                  tabIndex={0}
+                  aria-label="Abrir detalhes técnicos do StockFlow"
+                  onClick={() => openProject("stockflow")}
+                  onKeyDown={(event) => {
+                    if (event.key === "Enter" || event.key === " ") {
+                      event.preventDefault();
+                      openProject("stockflow");
+                    }
+                  }}
+                >
+                  <div
+                    className="case-card__image case-card__image--stockflow"
+                    style={{
+                      backgroundImage: `linear-gradient(to top, rgba(15,15,15,0.95), rgba(15,15,15,0.25)), url(${stockflowImage})`,
+                      backgroundSize: "cover",
+                      backgroundPosition: "center"
+                    }}
+                    aria-label="Visual do dashboard do sistema StockFlow"
+                  >
+                    <span className="case-number">05</span>
+                  </div>
+
+                  <div className="case-card__body">
+                    <div className="case-topline">
+                      <span>desenvolvimento</span>
+                      <span>StockFlow</span>
+                    </div>
+
+                    <h3>
+                      Do projeto acadêmico  
+
+                      <em>à aplicação pública.</em>
+                    </h3>
+
+                    <p>
+                      Sistema web de controle de estoque evoluído de um projeto acadêmico local
+                      para uma aplicação pública com PostgreSQL, segurança, testes automatizados,
+                      CI/CD e perfil DEMO somente para leitura.
+                    </p>
+
+                    <div className="card-link">
+                      <a
+                        href="https://github.com/marinizedev/stockflow-inventory-system"
+                        target="_blank"
+                        rel="noreferrer"
+                        onClick={(event ) => event.stopPropagation()}
+                      >
+                        <span>ver repositório</span>
+                        <Github size={14} />
+                      </a>
+                    </div>
+                  </div>
+                </article>
+              )}
+
               {shouldShowProject("data-engineering") && (
                 <article
                   className="case-card project-trigger"
@@ -768,7 +878,7 @@ export default function Home() {
                   }}
                 >
                   <div className="case-card__image" style={{ backgroundImage: `linear-gradient(to top, rgba(15,15,15,0.95), rgba(15,15,15,0.3)), url(${financeImage})`, backgroundSize: "cover", backgroundPosition: "center" }} aria-label="Visual da simulação de Monte Carlo">
-                    <span className="case-number">05</span>
+                    <span className="case-number">06</span>
                   </div>
                   <div className="case-card__body">
                     <div className="case-topline"><span>engenharia de dados</span><span>Monte Carlo</span></div>
@@ -799,7 +909,7 @@ export default function Home() {
                   }}
                 >
                   <div className="case-card__image case-card__image--system" style={{ backgroundImage: `linear-gradient(to top, rgba(15,15,15,0.95), rgba(15,15,15,0.22)), url(${oopImage})`, backgroundSize: "cover", backgroundPosition: "center" }} aria-label="Visual do simulador imobiliário">
-                    <span className="case-number">06</span>
+                    <span className="case-number">07</span>
                   </div>
                   <div className="case-card__body">
                     <div className="case-topline"><span>desenvolvimento</span><span>Python & OOP</span></div>
