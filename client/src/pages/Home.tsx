@@ -80,7 +80,7 @@ const projectDetails: Record<ProjectKey, ProjectDetail> = {
     outcome: "Uma base modular em construção, com quatro domínios analíticos, produtos padronizados e rastreabilidade desde a extração.",
     learnings: [
       "A sigla “DE” ensinou que uma saída inesperada pode ser evidência, não ruído.",
-      "O Spark entrou quando o volume e as limitações do MySQL exigiram uma arquitetura híbrida.",
+      "O Spark entrou quando as views analíticas sobre mais de 2 milhões de registros ultrapassaram o que o MySQL, na configuração do projeto, conseguia processar. Passei a processar no Spark e a entregar o resultado final ao banco.",
       "Logs, camadas e rastreabilidade transformaram cada erro em uma pista investigável."
     ],
     link: { label: "ver primeiro repositório", href: "https://github.com/marinizedev/data-pipeline-fastapi-ans" },
@@ -548,12 +548,12 @@ export default function Home() {
                     onClick={() => setShowInvestigationLog((visible) => !visible)}
                     aria-expanded={showInvestigationLog}
                   >
-                    <Terminal size={13} /> {showInvestigationLog ? "ocultar evidência" : "revelar evidência"}
+                    <Terminal size={13} /> {showInvestigationLog ? "ocultar consulta ilustrativa" : "ver consulta ilustrativa"}
                   </button>
                   {showInvestigationLog && (
                     <div className="timeline-log" role="status">
                       <span className="timeline-log__prompt">investigacao/sql&gt;</span>
-                      <code>SELECT uf, COUNT(*) FROM operadoras_financeiras WHERE registro_ans NOT IN (SELECT registro_ans FROM operadoras_ativas);</code>
+                      <code>SELECT uf, COUNT(*) FROM operadoras_financeiras WHERE registro_ans NOT IN (SELECT registro_ans FROM operadoras_ativas) GROUP BY uf;</code>
                       <strong>→ 11 registros · UF = “DE” · cadastro desconhecido</strong>
                     </div>
                   )}
