@@ -9,7 +9,7 @@ import Home from "./pages/Home";
 
 function Router() {
   return (
-    <WouterRouter base="/">
+    <WouterRouter base="/portfolio/">
       <Switch>
         <Route path="/" component={Home} />
         <Route path="/404" component={NotFound} />
