@@ -1,0 +1,339 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>
+      Quando um resultado estranho não é um erro do pipeline | Marinize Santana
+    </title>
+
+    <meta
+      name="description"
+      content="Como uma inconsistência encontrada em dados contábeis da ANS
+      mudou minha forma de pensar sobre qualidade, rastreabilidade e arquitetura."
+    />
+
+    <link rel="stylesheet" href="./notes.css" />
+  </head>
+
+  <body>
+    <header class="note-header">
+      <a class="note-brand" href="/">
+        <span class="note-brand__mark">M.</span>
+        <span>MARINIZE.</span>
+      </a>
+
+      <a class="note-back" href="/">
+        Voltar ao portfólio
+        <span aria-hidden="true">↗</span>
+      </a>
+    </header>
+
+    <main class="note-page">
+      <section class="note-hero">
+        <p class="note-kicker">
+          Engenharia de dados · qualidade de dados · 08 min de leitura
+        </p>
+
+        <h1>
+          Quando um resultado estranho
+          <em>não é um erro do pipeline.</em>
+        </h1>
+
+        <p class="note-lede">
+          Como uma inconsistência encontrada em dados contábeis da ANS mudou
+          minha forma de pensar sobre qualidade, rastreabilidade e arquitetura.
+        </p>
+
+        <div class="note-meta">
+          <span>História de evolução</span>
+          <span>Antes da Plataforma Analítica ANS</span>
+        </div>
+      </section>
+
+      <div class="note-layout">
+        <aside class="note-aside">
+          <span class="note-aside__label">nesta investigação</span>
+
+          <ol>
+            <li>
+              <a href="#ponto-de-partida">O ponto de partida</a>
+            </li>
+
+            <li>
+              <a href="#staging">Quando o ambiente revelou problemas</a>
+            </li>
+
+            <li>
+              <a href="#etl">O pipeline que dizia “sucesso”</a>
+            </li>
+
+            <li>
+              <a href="#mysql">O limite do MySQL</a>
+            </li>
+
+            <li>
+              <a href="#arquitetura">A arquitetura híbrida</a>
+            </li>
+
+            <li>
+              <a href="#descoberta">A descoberta da UF “DE”</a>
+            </li>
+
+            <li>
+              <a href="#plataforma">Da inconsistência à plataforma</a>
+            </li>
+
+            <li>
+              <a href="#aprendizado">O aprendizado</a>
+            </li>
+          </ol>
+        </aside>
+
+        <article class="note-content">
+          <p class="note-opening">
+            Quatro meses depois de concluir um teste técnico básico, decidi
+            voltar ao projeto para evoluí-lo profissionalmente. O que começou
+            como um pipeline linear acabou se tornando uma investigação sobre
+            confiabilidade, arquitetura e qualidade de dados.
+          </p>
+
+          <p>
+            A cada etapa de evolução, um novo problema revelava uma limitação
+            que antes permanecia escondida. O ambiente, o banco, o ETL e a
+            camada visual passaram a ser analisados como partes de um mesmo
+            sistema.
+          </p>
+
+          <h2 id="ponto-de-partida">O ponto de partida</h2>
+
+          <p>
+            O projeto original utilizava Python, Pandas, MySQL e uma API REST
+            desenvolvida com FastAPI. Os dados analisados eram demonstrações
+            contábeis públicas da ANS referentes aos três trimestres de 2025.
+          </p>
+
+          <p>
+            Naquele momento, o objetivo ainda era extrair, transformar,
+            armazenar e disponibilizar os dados. Quatro meses depois, decidi
+            retornar ao pipeline para investigar como ele poderia se tornar
+            tecnicamente mais confiável, reproduzível e preparado para análises
+            mais profundas.
+          </p>
+
+          <h2 id="staging">
+            Quando o ambiente revelou problemas ocultos
+          </h2>
+
+          <p>
+            A primeira grande etapa foi a containerização com Docker Compose.
+            O ambiente passou a reunir, de forma isolada e reproduzível, o
+            processamento Python, o banco MySQL e a API FastAPI.
+          </p>
+
+          <p>
+            A execução dentro dos contêineres revelou problemas na estrutura
+            original do banco. A camada de staging estava sendo utilizada quase
+            como um depósito temporário, sem o nível de validação estrutural
+            necessário.
+          </p>
+
+          <p>
+            Reorganizei a staging para cumprir o papel de uma landing zone
+            técnica, alinhando tipos de dados, limpando tabelas e ajustando
+            restrições relacionais para garantir integridade desde a primeira
+            inserção.
+          </p>
+
+          <h2 id="etl">O pipeline que dizia “sucesso”</h2>
+
+          <p>
+            Depois do saneamento do banco, novas inconsistências apareceram em
+            etapas posteriores. O terminal informava que o processo havia
+            terminado com sucesso, mas isso não significava que o resultado
+            estivesse confiável.
+          </p>
+
+          <p>
+            Registros nulos, chaves de relacionamento sem validação robusta e
+            transformações silenciosas permitiam que dados inconsistentes
+            avançassem pelo fluxo sem provocar exceções.
+          </p>
+
+          <p>
+            Naquele estágio, ainda não havia rastreabilidade detalhada nem logs
+            suficientes para apontar exatamente onde os desvios aconteciam. O
+            ETL precisou ser refatorado de forma investigativa, com validações
+            de preenchimento, filtros preventivos e tratamentos explícitos de
+            tipos de dados.
+          </p>
+
+          <blockquote>
+            Um pipeline terminar sem exceções não significa que os dados
+            estejam corretos.
+          </blockquote>
+
+          <h2 id="mysql">O limite do MySQL</h2>
+
+          <p>
+            Com o backend mais confiável, avancei para a camada visual usando
+            Streamlit e Plotly. A intenção era explorar os dados por meio de
+            gráficos e análises interativas construídas em Python.
+          </p>
+
+          <p>
+            Os endpoints originais da API eram suficientes para consultas
+            simples, mas não entregavam todas as agregações necessárias para
+            análises multidimensionais.
+          </p>
+
+          <p>
+            A primeira solução foi transferir parte da inteligência analítica
+            para o MySQL por meio de Views SQL. Porém, as consultas passaram a
+            consolidar e agrupar grandes volumes de registros contábeis por
+            operadora, estado e conta contábil.
+          </p>
+
+          <p>
+            O banco, que continuava adequado para armazenar dados estruturados
+            e atender a API, começou a apresentar degradação nas agregações
+            analíticas mais complexas. Isso evidenciou o limite de uma
+            arquitetura que dependia exclusivamente do processamento
+            relacional.
+          </p>
+
+          <h2 id="arquitetura">A arquitetura híbrida</h2>
+
+          <p>
+            Para dividir melhor as responsabilidades, introduzi o Apache Spark
+            no processamento das transformações analíticas mais pesadas.
+          </p>
+
+          <p>
+            O MySQL permaneceu responsável pelo armazenamento das dimensões e
+            tabelas finais estruturadas para consumo da API. O Spark assumiu o
+            processamento analítico que anteriormente pressionava o banco.
+          </p>
+
+          <p>
+            Também organizei o processamento em módulos, com uma estrutura
+            separada para o núcleo do Spark e para as etapas sequenciais do
+            pipeline. Logs estruturados passaram a registrar o comportamento
+            das execuções dentro dos contêineres.
+          </p>
+
+          <p>
+            Com isso, os logs deixaram de ser apenas mensagens de execução e
+            passaram a funcionar como um mapa para investigar falhas,
+            transformações e inconsistências.
+          </p>
+
+          <h2 id="descoberta">A descoberta da UF “DE”</h2>
+
+          <p>
+            Depois de semanas ajustando Docker Compose, Spark Session, volumes,
+            Views SQL, transformações e tratamento de dados, o pipeline
+            finalmente executou de ponta a ponta.
+          </p>
+
+          <p>
+            Quando os gráficos de distribuição por estado foram preenchidos,
+            uma categoria inesperada apareceu: <strong>“DE”</strong>.
+          </p>
+
+          <p>
+            A sigla não correspondia a nenhuma unidade federativa brasileira.
+            Como o valor concentrava registros relevantes, não seria
+            responsável simplesmente removê-lo ou substituí-lo sem investigar.
+          </p>
+
+          <div class="note-callout">
+            <span class="note-callout__label">descoberta</span>
+
+            <p>
+              “DE” não era um erro criado pelo ETL. Era uma evidência de uma
+              inconsistência presente nas fontes oficiais brutas da ANS.
+            </p>
+          </div>
+
+          <p>
+            Voltei às etapas anteriores do fluxo, comparei os registros
+            processados com os dados de origem e revisei as transformações
+            aplicadas. O pipeline estava preservando e revelando o valor; não
+            havia inventado a inconsistência.
+          </p>
+
+          <h2 id="plataforma">Da inconsistência à Plataforma Analítica</h2>
+
+          <p>
+            A descoberta mudou a forma como eu enxergava o projeto. O objetivo
+            deixou de ser apenas processar arquivos e disponibilizar tabelas.
+            Passei a pensar em um ecossistema capaz de preservar a origem,
+            organizar domínios, documentar hipóteses e manter rastreabilidade.
+          </p>
+
+          <p>
+            Foi nesse processo que começou a nascer a ideia da Plataforma
+            Analítica ANS baseada em domínios: um laboratório autoral ainda em
+            construção, com arquitetura Medallion, camadas Bronze, Silver e
+            Gold, modelagem dimensional e experimentação com PySpark.
+          </p>
+
+          <p>
+            A plataforma não nasceu pronta. Ela foi sendo formada a partir das
+            perguntas que os dados colocaram no caminho e das limitações que
+            cada etapa do projeto revelou.
+          </p>
+
+          <h2 id="aprendizado">O aprendizado</h2>
+
+          <p>
+            Essa experiência reforçou uma decisão importante: resultados
+            inesperados não devem ser automaticamente removidos para que a base
+            pareça mais limpa.
+          </p>
+
+          <p>
+            Primeiro é necessário compreender a origem, registrar a hipótese e
+            documentar a decisão. Em alguns casos, preservar o dado original é
+            mais responsável do que substituí-lo silenciosamente.
+          </p>
+
+          <p>
+            A sigla “DE” acabou se tornando mais do que uma inconsistência
+            cadastral. Ela foi uma das evidências que mudaram minha forma de
+            pensar sobre qualidade, rastreabilidade e arquitetura de dados.
+          </p>
+
+          <p>
+            Uma saída inesperada pode ser ruído. Mas também pode ser uma pista
+            sobre o sistema que produziu aquela informação.
+          </p>
+
+          <footer class="note-footer">
+            <a href="/">
+              Voltar ao portfólio
+              <span aria-hidden="true">↗</span>
+            </a>
+
+            <a href="/#cases">
+              Conhecer os cases públicos
+              <span aria-hidden="true">↗</span>
+            </a>
+          </footer>
+        </article>
+      </div>
+    </main>
+
+    <footer class="note-site-footer">
+      <a href="/">
+        ← Voltar para Marinize Santana
+      </a>
+
+      <span>
+        investigar · validar · estruturar · entregar
+      </span>
+    </footer>
+  </body>
+</html>

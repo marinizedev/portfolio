@@ -1136,3 +1136,148 @@ a:focus-visible, button:focus-visible {
   z-index: 3 !important;
   margin-left: auto !important;
 }
+
+/* =========================================================
+   NOTAS DE ENGENHARIA
+   ========================================================= */
+
+.notes-section {
+  position: relative;
+  padding: 8rem 0 9rem;
+  background: var(--color-paper, #f4eee4);
+}
+
+.notes-section .section-heading {
+  margin-bottom: 3.5rem;
+}
+
+.notes-section .section-heading h2 {
+  max-width: 720px;
+  margin: 0;
+  font-size: clamp(2.8rem, 5vw, 5.8rem);
+  line-height: 0.95;
+}
+
+.notes-section .section-heading > p {
+  max-width: 360px;
+  margin-top: 1.5rem;
+  color: var(--color-muted, #70695f);
+  line-height: 1.7;
+}
+
+.notes-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1.25rem;
+}
+
+.note-card {
+  display: flex;
+  min-height: 320px;
+  flex-direction: column;
+  padding: 2rem;
+  border: 1px solid rgba(52, 45, 37, 0.16);
+  background: rgba(255, 252, 246, 0.58);
+  transition:
+    transform 220ms ease,
+    border-color 220ms ease,
+    background 220ms ease;
+}
+
+.note-card:hover {
+  transform: translateY(-6px);
+  border-color: rgba(190, 126, 43, 0.65);
+  background: #fffaf2;
+}
+
+.note-card__meta {
+  display: block;
+  margin-bottom: 2.5rem;
+  color: #b77a2c;
+  font-family: var(--font-mono, monospace);
+  font-size: 0.68rem;
+  letter-spacing: 0.12em;
+  line-height: 1.4;
+  text-transform: uppercase;
+}
+
+.note-card h3 {
+  max-width: 310px;
+  margin: 0;
+  color: var(--color-ink, #24201c);
+  font-family: var(--font-display, Georgia, serif);
+  font-size: clamp(1.7rem, 2.3vw, 2.5rem);
+  font-weight: 400;
+  line-height: 1.05;
+}
+
+.note-card p {
+  margin: 1.25rem 0 2rem;
+  color: var(--color-muted, #70695f);
+  font-size: 0.95rem;
+  line-height: 1.65;
+}
+
+.note-card a {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  margin-top: auto;
+  color: #9c6725;
+  font-size: 0.84rem;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.note-card a:hover {
+  color: #6e4618;
+}
+
+@media (max-width: 900px) {
+  .notes-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .note-card {
+    min-height: auto;
+  }
+
+  .notes-section .section-heading h2 {
+    font-size: clamp(2.8rem, 12vw, 5rem);
+  }
+}
+
+/* Ajuste de contraste da seção Notas */
+
+.notes-section .section-heading h2 {
+  color: var(--ink);
+}
+
+.notes-section .section-heading h2 em {
+  color: var(--caramel);
+  font-style: italic;
+}
+
+.notes-section .section-heading--split > p {
+  color: rgba(15, 15, 15, 0.59);
+}
+
+/* Ajuste de transição entre Cases e Notas */
+
+.cases-section {
+  padding-bottom: 90px;
+}
+
+.notes-section {
+  padding-top: 88px;
+}
+
+.notes-grid .note-card:nth-child(4) {
+  grid-column: 2;
+}
+
+@media (max-width: 900px) {
+  .notes-grid .note-card:nth-child(4) {
+    grid-column: auto;
+  }
+}

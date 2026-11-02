@@ -45,6 +45,7 @@ const navItems = [
   { label: "Essência", href: "#essencia" },
   { label: "Trajetória", href: "#trajetoria" },
   { label: "Cases", href: "#cases" },
+  { label: "Notas", href: "#notas" },
   { label: "Stack", href: "#stack" },
 ];
 
@@ -80,7 +81,7 @@ const projectDetails: Record<ProjectKey, ProjectDetail> = {
     outcome: "Uma base modular em construção, com quatro domínios analíticos, produtos padronizados e rastreabilidade desde a extração.",
     learnings: [
       "A sigla “DE” ensinou que uma saída inesperada pode ser evidência, não ruído.",
-      "O Spark entrou quando as views analíticas sobre mais de 2 milhões de registros ultrapassaram o que o MySQL, na configuração do projeto, conseguia processar. Passei a processar no Spark e a entregar o resultado final ao banco.",
+      "O Spark entrou quando o volume e as limitações do MySQL exigiram uma arquitetura híbrida.",
       "Logs, camadas e rastreabilidade transformaram cada erro em uma pista investigável."
     ],
     link: { label: "ver primeiro repositório", href: "https://github.com/marinizedev/data-pipeline-fastapi-ans" },
@@ -283,7 +284,7 @@ export default function Home() {
   const [activeProject, setActiveProject] = useState<ProjectKey | null>(null);
   const [isModalClosing, setIsModalClosing] = useState(false);
   const heroRef = useRef<HTMLElement | null>(null);
-  const sectionIds = useMemo(() => ["essencia", "trajetoria", "cases", "stack", "contato"], []);
+  const sectionIds = useMemo(() => ["essencia", "trajetoria", "cases", "notas", "stack", "contato"], []);
 
   useEffect(() => {
     const onScroll = () => {
@@ -311,6 +312,33 @@ export default function Home() {
       document.removeEventListener("keydown", onKeyDown);
     };
   }, [activeProject]);
+
+  useEffect(() => {
+    const hash = window.location.hash;
+
+    if (!hash) {
+      return;
+    }
+
+    const targetId = hash.slice(1);
+
+    const scrollToTarget = () => {
+      const target = document.getElementById(targetId);
+
+      if (target) {
+        target.scrollIntoView({
+          behavior: "smooth",
+          block: "start",
+        });
+      }
+    };
+
+    const timeoutId = window.setTimeout(scrollToTarget, 150);
+
+    return () => {
+      window.clearTimeout(timeoutId);
+    };
+  }, []);
 
   const closeMenu = () => setMenuOpen(false);
   const closeProjectModal = () => {
@@ -548,12 +576,12 @@ export default function Home() {
                     onClick={() => setShowInvestigationLog((visible) => !visible)}
                     aria-expanded={showInvestigationLog}
                   >
-                    <Terminal size={13} /> {showInvestigationLog ? "ocultar consulta ilustrativa" : "ver consulta ilustrativa"}
+                    <Terminal size={13} /> {showInvestigationLog ? "ocultar evidência" : "revelar evidência"}
                   </button>
                   {showInvestigationLog && (
                     <div className="timeline-log" role="status">
                       <span className="timeline-log__prompt">investigacao/sql&gt;</span>
-                      <code>SELECT uf, COUNT(*) FROM operadoras_financeiras WHERE registro_ans NOT IN (SELECT registro_ans FROM operadoras_ativas) GROUP BY uf;</code>
+                      <code>SELECT uf, COUNT(*) FROM operadoras_financeiras WHERE registro_ans NOT IN (SELECT registro_ans FROM operadoras_ativas);</code>
                       <strong>→ 11 registros · UF = “DE” · cadastro desconhecido</strong>
                     </div>
                   )}
@@ -928,11 +956,101 @@ export default function Home() {
           </div>
         </section>
 
+        <section id="notas" className="notes-section section-light" aria-labelledby="notes-title">
+  <div className="container">
+    <div className="section-heading section-heading--split">
+      <div>
+        <SectionKicker number="04">notas de engenharia</SectionKicker>
+        <h2 id="notes-title">
+          O que acontece <em>entre uma decisão e outra.</em>
+        </h2>
+      </div>
+
+      <p>
+        Reflexões sobre dados, qualidade, arquitetura e os aprendizados que
+        aparecem quando uma solução precisa resistir à investigação.
+      </p>
+    </div>
+
+    <div className="notes-grid">
+      <article className="note-card">
+        <span className="note-card__meta">
+          ANS · pipeline original · 08 min
+        </span>
+
+        <h3>
+          Quando um resultado estranho não é um erro do pipeline
+        </h3>
+
+        <p>
+          Como a investigação da UF “DE”, encontrada em dados contábeis da ANS,
+          mudou minha forma de pensar sobre qualidade, rastreabilidade e arquitetura.
+        </p>
+
+        <a
+          href={`${import.meta.env.BASE_URL}notas/uf-de-ans.html`}
+        >
+          Ler nota <ArrowUpRight size={15} />
+        </a>
+      </article>
+
+      <article className="note-card">
+        <span className="note-card__meta">
+          análise · Data Storytelling · 07 min
+        </span>
+
+        <h3>
+          Antes do insight, foi preciso entender a métrica
+        </h3>
+
+        <p>
+          Como um projeto paralelo sobre reclamações da ANS se transformou em uma
+          investigação de dados, metodologia e narrativa visual.
+        </p>
+
+        <a
+          href={`${import.meta.env.BASE_URL}notas/ans-complaints-insights.html`}
+        >
+          Ler nota <ArrowUpRight size={15} />
+        </a>
+      </article>
+
+      <article className="note-card">
+        <span className="note-card__meta">
+          confiabilidade · 06 min</span>
+        <h3>O que 58 testes mudaram no StockFlow</h3>
+        <p>
+          Como testes, segurança e deploy transformaram uma aplicação local em
+          uma demonstração pública mais confiável.
+        </p>
+        <a
+          href={`${import.meta.env.BASE_URL}notas/stockflow.html`}
+        >
+          Ler nota <ArrowUpRight size={15} />
+        </a>
+      </article>
+
+      <article className="note-card">
+        <span className="note-card__meta">
+          automação · 05 min</span>
+        <h3>De 4–5 horas para poucos minutos</h3>
+        <p>
+          A investigação por trás da automação de uma rotina financeira mensal.
+        </p>
+        <a href={`${import.meta.env.BASE_URL}notas/automacao-financeira.html`}>
+          Ler nota <ArrowUpRight size={15} />
+        </a>
+      </article>
+    </div>
+  </div>
+        </section>
+
+
         {/* New Section: Como eu penso */}
         <section className="thinking-section section-dark" aria-labelledby="thinking-title" style={{ padding: '6rem 0', background: '#0b0b0b', color: '#f5f0e8', borderTop: '1px solid rgba(232, 169, 74, 0.15)' }}>
           <div className="container">
             <div className="section-heading">
-              <SectionKicker number="04">filosofia de trabalho</SectionKicker>
+              <SectionKicker number="05">filosofia de trabalho</SectionKicker>
               <h2 id="thinking-title">Como eu transformo dados <em>em engenharia.</em></h2>
             </div>
             <div className="thinking-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '2rem', marginTop: '3rem' }}>
@@ -959,7 +1077,7 @@ export default function Home() {
           <div className="container">
             <div className="section-heading section-heading--split stack-heading">
               <div>
-                <SectionKicker number="05">ferramentas com intenção</SectionKicker>
+                <SectionKicker number="06">ferramentas com intenção</SectionKicker>
                 <h2 id="stack-title">Minha stack é um <em>meio.</em><br />A confiabilidade é o fim.</h2>
               </div>
               <p>As tecnologias entram quando resolvem uma necessidade: processar melhor, validar antes, observar o fluxo, servir o dado ou tornar uma decisão mais clara.</p>
@@ -991,7 +1109,7 @@ export default function Home() {
         <section className="proof-section section-light" aria-labelledby="proof-title">
           <div className="container proof-grid">
             <div className="proof-intro">
-              <SectionKicker number="06">o que eu levo comigo</SectionKicker>
+              <SectionKicker number="07">o que eu levo comigo</SectionKicker>
               <h2 id="proof-title">Profundidade também é uma <em>competência técnica.</em></h2>
               <p>Sou uma estudante de ADS, autodidata e em busca da primeira oportunidade formal. Não escondo isso. Pelo contrário: sei exatamente a dimensão do caminho que percorri e o tipo de profissional que estou construindo.</p>
             </div>

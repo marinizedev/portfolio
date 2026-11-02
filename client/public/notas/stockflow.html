@@ -1,0 +1,346 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>
+      O que 58 testes mudaram no StockFlow | Marinize Santana
+    </title>
+
+    <meta
+      name="description"
+      content="Como o StockFlow evoluiu de uma aplicação acadêmica local para uma demonstração pública com segurança, testes e deploy."
+    />
+
+    <link rel="stylesheet" href="./notes.css" />
+  </head>
+
+  <body>
+    <header class="note-header">
+      <a class="note-brand" href="/">
+        <span class="note-brand__mark">M.</span>
+        <span>MARINIZE.</span>
+      </a>
+
+      <a class="note-back" href="/">
+        Voltar ao portfólio
+        <span aria-hidden="true">↗</span>
+      </a>
+    </header>
+
+    <main class="note-page">
+      <section class="note-hero">
+        <p class="note-kicker">
+          Confiabilidade · segurança · deploy · 06 min de leitura
+        </p>
+
+        <h1>
+          O que 58 testes
+          <em>mudaram no StockFlow.</em>
+        </h1>
+
+        <p class="note-lede">
+          Como uma aplicação acadêmica saiu do ambiente local e se tornou uma
+          demonstração pública com segurança, deploy e automação.
+        </p>
+
+        <div class="note-meta">
+          <span>Projeto autoral</span>
+          <span>Flask · PostgreSQL · Render</span>
+        </div>
+      </section>
+
+      <div class="note-layout">
+        <aside class="note-aside">
+          <span class="note-aside__label">nesta evolução</span>
+
+          <ol>
+            <li>
+              <a href="#origem">De entrega acadêmica a projeto público</a>
+            </li>
+
+            <li>
+              <a href="#ambiente">O problema do ambiente</a>
+            </li>
+
+            <li>
+              <a href="#confiabilidade">Quando funcionar não era suficiente</a>
+            </li>
+
+            <li>
+              <a href="#seguranca">Segurança e controle de acesso</a>
+            </li>
+
+            <li>
+              <a href="#deploy">Do SQLite ao PostgreSQL</a>
+            </li>
+
+            <li>
+              <a href="#testes">O papel dos testes</a>
+            </li>
+
+            <li>
+              <a href="#publico">Uma demonstração pública</a>
+            </li>
+
+            <li>
+              <a href="#aprendizado">O aprendizado</a>
+            </li>
+          </ol>
+        </aside>
+
+        <article class="note-content">
+          <p class="note-opening">
+            O StockFlow começou como um projeto acadêmico: uma aplicação local
+            para controle de produtos, estoque e movimentações. Depois da
+            entrega, decidi não tratá-lo como um projeto encerrado.
+          </p>
+
+          <p>
+            A partir daí, comecei a investigar o que seria necessário para transformar
+            uma aplicação funcional em um sistema mais confiável, documentado e
+            preparado para ser apresentado publicamente.
+          </p>
+
+          <h2 id="origem">
+            De entrega acadêmica a projeto público
+          </h2>
+
+          <p>
+            A primeira versão cumpria seu objetivo acadêmico. O sistema
+            permitia cadastrar produtos, registrar entradas e saídas,
+            controlar usuários e aplicar regras de negócio relacionadas ao
+            estoque.
+          </p>
+
+          <p>
+            Porém, executar uma aplicação localmente para uma avaliação é
+            diferente de disponibilizá-la como parte de um portfólio
+            profissional.
+          </p>
+
+          <p>
+            Para fazer essa transição, precisei olhar para o projeto como um
+            sistema completo: código, banco de dados, segurança, testes,
+            configuração, documentação e experiência de quem acessaria a
+            aplicação.
+          </p>
+
+          <h2 id="ambiente">
+            O problema do ambiente
+          </h2>
+
+          <p>
+            Na versão original, o sistema utilizava SQLite, uma escolha
+            adequada para desenvolvimento local e para o contexto acadêmico.
+            Para uma aplicação publicada, porém, eu precisava separar melhor
+            as configurações de desenvolvimento e produção.
+          </p>
+
+          <p>
+            A configuração passou a escolher o banco a partir de variáveis de
+            ambiente. Assim, o projeto continuou utilizando SQLite localmente,
+            enquanto o ambiente publicado passou a utilizar PostgreSQL.
+          </p>
+
+          <p>
+            Essa mudança também deixou o projeto mais reproduzível. As
+            informações sensíveis não precisavam estar no código, e cada
+            ambiente poderia utilizar sua própria configuração.
+          </p>
+
+          <h2 id="confiabilidade">
+            Quando funcionar não era suficiente
+          </h2>
+
+          <p>
+            Um sistema pode funcionar durante uma demonstração e ainda assim
+            apresentar riscos quando submetido a outros cenários.
+          </p>
+
+          <p>
+            Por isso, revisei as regras de negócio relacionadas a produtos,
+            usuários e movimentações. O sistema precisava impedir situações
+            como estoque negativo, quantidades inválidas, produtos inativos
+            sendo movimentados e perfis de usuário incompatíveis.
+          </p>
+
+          <p>
+            Também substituí mensagens soltas de terminal por logging
+            estruturado, criando uma forma mais clara de acompanhar eventos
+            importantes da aplicação.
+          </p>
+
+          <blockquote>
+            Confiabilidade não é apenas o sistema funcionar no cenário
+            esperado. É também saber como ele reage quando algo sai do
+            esperado.
+          </blockquote>
+
+          <h2 id="seguranca">
+            Segurança e controle de acesso
+          </h2>
+
+          <p>
+            A evolução também exigiu revisar aspectos de segurança que não
+            eram o foco principal da primeira entrega.
+          </p>
+
+          <p>
+            As senhas passaram a ser armazenadas por meio de hash, e as rotas
+            foram protegidas de acordo com o perfil do usuário. Operações
+            administrativas ficaram restritas a usuários autorizados.
+          </p>
+
+          <p>
+            Também foram considerados mecanismos de proteção para formulários,
+            controle de sessão e tratamento de acessos não autorizados.
+          </p>
+
+          <p>
+            Para permitir que visitantes conhecessem o sistema publicado, criei
+            um perfil de demonstração com permissões somente de leitura. Assim,
+            qualquer pessoa pode navegar pelas telas sem comprometer os dados
+            do ambiente de produção.
+          </p>
+
+          <h2 id="deploy">
+            Do SQLite ao PostgreSQL
+          </h2>
+
+          <p>
+            O banco PostgreSQL foi provisionado no Neon, enquanto a aplicação
+            foi publicada no Render utilizando Gunicorn como servidor WSGI de
+            produção.
+          </p>
+
+          <p>
+            Essa etapa revelou problemas que não apareciam no ambiente local:
+            diferenças de configuração, conexão com banco remoto, variáveis de
+            ambiente e necessidade de preparar o schema corretamente.
+          </p>
+
+          <p>
+            O deploy deixou de ser apenas o último passo. Ele passou a fazer
+            parte do próprio processo de desenvolvimento e validação.
+          </p>
+
+          <h2 id="testes">
+            O papel dos testes
+          </h2>
+
+          <p>
+            Os testes foram importantes para verificar se as melhorias de
+            segurança e infraestrutura não quebravam as regras de negócio que
+            já funcionavam.
+          </p>
+
+          <p>
+            Ao final da evolução, o projeto contava com 58 testes automatizados
+            cobrindo serviços, produtos, usuários, movimentações e proteção
+            contra requisições inválidas.
+          </p>
+
+          <p>
+            Além dos testes locais, configurei workflows no GitHub Actions para
+            executar validações automaticamente, auditar dependências e
+            verificar o comportamento da aplicação após o deploy.
+          </p>
+
+          <div class="note-callout">
+            <span class="note-callout__label">resultado</span>
+
+            <p>
+              Os testes transformaram mudanças arriscadas em mudanças
+              verificáveis.
+            </p>
+          </div>
+
+          <h2 id="publico">
+            Uma demonstração pública
+          </h2>
+
+          <p>
+            Depois da publicação, o StockFlow deixou de depender apenas de uma
+            explicação ou de capturas de tela. O projeto passou a ter uma URL
+            pública, documentação técnica, código versionado e um ambiente que
+            pode ser explorado por visitantes.
+          </p>
+
+          <p>
+            O perfil de demonstração foi criado para equilibrar transparência
+            e segurança. A pessoa visitante pode conhecer o dashboard, os
+            produtos, as movimentações e a organização do sistema sem possuir
+            permissões para alterar os dados publicados.
+          </p>
+
+          <p>
+            Essa decisão também tornou a experiência mais próxima de um produto
+            real: quem acessa consegue entender o fluxo da aplicação sem
+            precisar receber acesso administrativo.
+          </p>
+
+          <h2 id="aprendizado">
+            O aprendizado
+          </h2>
+
+          <p>
+            O StockFlow me mostrou que evoluir um projeto não significa apenas
+            adicionar funcionalidades. É necessário pensar em configuração por
+            ambiente, integridade dos dados, segurança, testabilidade,
+            observabilidade, deploy e documentação.
+          </p>
+
+          <p>
+            A transformação mais importante não foi trocar SQLite por
+            PostgreSQL ou publicar a aplicação no Render. Foi mudar a forma de
+            enxergar o sistema: de uma entrega concluída para um produto que
+            precisa ser compreendido, executado e avaliado por outras pessoas.
+          </p>
+
+          <p>
+            Os 58 testes representam mais do que um número. Eles representam
+            uma tentativa de tornar cada evolução mais segura, observável e
+            confiável.
+          </p>
+
+          <footer class="note-footer">
+            <a
+              href="https://stockflow-inventory-system-zaqc.onrender.com"
+              target="_blank"
+              rel="noreferrer"
+            >
+              Acessar a demonstração
+              <span aria-hidden="true">↗</span>
+            </a>
+
+            <a
+              href="https://github.com/marinizedev/stockflow-inventory-system"
+              target="_blank"
+              rel="noreferrer"
+            >
+              Ver o repositório
+              <span aria-hidden="true">↗</span>
+            </a>
+
+            <a href="/">
+              Voltar ao portfólio
+              <span aria-hidden="true">↗</span>
+            </a>
+          </footer>
+        </article>
+      </div>
+    </main>
+
+    <footer class="note-site-footer">
+      <a href="/">
+        ← Voltar para Marinize Santana
+      </a>
+
+      <span>
+        testar · proteger · publicar · evoluir
+      </span>
+    </footer>
+  </body>
+</html>

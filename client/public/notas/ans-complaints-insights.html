@@ -1,0 +1,399 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>
+      Antes do insight, foi preciso entender a métrica | Marinize Santana
+    </title>
+
+    <meta
+      name="description"
+      content="Como um projeto paralelo sobre reclamações de planos de saúde se transformou em uma investigação de dados, metodologia e Data Storytelling."
+    />
+
+    <link rel="stylesheet" href="./notes.css" />
+  </head>
+
+  <body>
+    <header class="note-header">
+      <a class="note-brand" href="/">
+        <span class="note-brand__mark">M.</span>
+        <span>MARINIZE.</span>
+      </a>
+
+      <a class="note-back" href="/">
+        Voltar ao portfólio
+        <span aria-hidden="true">↗</span>
+      </a>
+    </header>
+
+    <main class="note-page">
+      <section class="note-hero">
+        <p class="note-kicker">
+          Análise de dados · Data Storytelling · 07 min de leitura
+        </p>
+
+        <h1>
+          Antes do insight,
+          <em>foi preciso entender a métrica.</em>
+        </h1>
+
+        <p class="note-lede">
+          Como um projeto paralelo sobre reclamações de planos de saúde se
+          transformou em uma investigação de dados, metodologia e narrativa
+          visual.
+        </p>
+
+        <div class="note-meta">
+          <span>ANS Complaints Insights</span>
+          <span>Python · Pandas · Streamlit · Plotly</span>
+        </div>
+      </section>
+
+      <div class="note-layout">
+        <aside class="note-aside">
+          <span class="note-aside__label">nesta investigação</span>
+
+          <ol>
+            <li>
+              <a href="#contexto">
+                Quando construir exige tempo
+              </a>
+            </li>
+
+            <li>
+              <a href="#paralelo">
+                A decisão de criar um projeto paralelo
+              </a>
+            </li>
+
+            <li>
+              <a href="#pergunta">
+                Uma nova pergunta nos dados da ANS
+              </a>
+            </li>
+
+            <li>
+              <a href="#metrica">
+                Quando a métrica não parecia confiável
+              </a>
+            </li>
+
+            <li>
+              <a href="#correcao">
+                A correção metodológica
+              </a>
+            </li>
+
+            <li>
+              <a href="#descobertas">
+                O que os dados mostraram
+              </a>
+            </li>
+
+            <li>
+              <a href="#storytelling">
+                De análise a experiência visual
+              </a>
+            </li>
+
+            <li>
+              <a href="#aprendizado">
+                O aprendizado
+              </a>
+            </li>
+          </ol>
+        </aside>
+
+        <article class="note-content">
+          <p class="note-opening">
+            Enquanto a Plataforma Analítica ANS avançava por uma fase de alta
+            complexidade técnica, percebi que sua construção exigiria tempo,
+            investigação e decisões arquiteturais que não poderiam ser
+            aceleradas artificialmente.
+          </p>
+
+          <p>
+            Para não ficar parada entre uma etapa e outra, comecei a pensar em
+            um projeto paralelo: algo que aproveitasse meu contato com dados
+            públicos da ANS, mas tivesse outra pergunta, outro recorte e um
+            ciclo de desenvolvimento independente.
+          </p>
+
+          <div class="note-callout">
+            <span class="note-callout__label">contexto importante</span>
+
+            <p>
+              O ANS Complaints Insights é independente da Plataforma Analítica
+              ANS. Embora os dois projetos utilizem dados públicos da mesma
+              instituição, trabalham com bases, perguntas e objetivos
+              diferentes.
+            </p>
+          </div>
+
+          <h2 id="contexto">
+            Quando construir exige tempo
+          </h2>
+
+          <p>
+            A Plataforma Analítica ANS estava crescendo em escopo e
+            complexidade. O projeto já envolvia investigação de dados,
+            arquitetura, organização por domínios, rastreabilidade e decisões
+            que exigiam uma construção cuidadosa.
+          </p>
+
+          <p>
+            Em vez de interpretar esse tempo como paralisação, decidi
+            aproveitá-lo para desenvolver uma segunda frente de aprendizado.
+            Eu queria continuar investigando dados reais, praticar Data
+            Storytelling e construir uma entrega pública em um ciclo mais
+            objetivo.
+          </p>
+
+          <h2 id="paralelo">
+            A decisão de criar um projeto paralelo
+          </h2>
+
+          <p>
+            A ideia não era abandonar a Plataforma nem criar uma versão
+            simplificada dela. O objetivo era desenvolver um projeto
+            completamente independente, com outra base de dados e outra
+            finalidade analítica.
+          </p>
+
+          <p>
+            Como eu já estava trabalhando com dados públicos da ANS, decidi
+            consultar a API oficial e procurar informações que não fizessem
+            parte do recorte utilizado na Plataforma Analítica.
+          </p>
+
+          <p>
+            Foi assim que encontrei os dados relacionados às reclamações de
+            beneficiários de planos de saúde e ao Índice Geral de Reclamações,
+            conhecido como IGR.
+          </p>
+
+          <h2 id="pergunta">
+            Uma nova pergunta nos dados da ANS
+          </h2>
+
+          <p>
+            O projeto nasceu de uma pergunta simples:
+          </p>
+
+          <blockquote>
+            As reclamações cresceram apenas porque aumentou o número de
+            beneficiários ou havia uma mudança mais profunda acontecendo?
+          </blockquote>
+
+          <p>
+            Para investigar essa pergunta, analisei dados de 2015 a 2026,
+            considerando informações de reclamações, beneficiários, porte das
+            operadoras, modalidade de cobertura e situação das empresas.
+          </p>
+
+          <p>
+            O objetivo não era apenas produzir gráficos. Era compreender o
+            comportamento dos dados, testar hipóteses e construir uma narrativa
+            visual que deixasse as descobertas mais acessíveis.
+          </p>
+
+          <h2 id="metrica">
+            Quando a métrica não parecia confiável
+          </h2>
+
+          <p>
+            Durante a análise exploratória, os valores anuais do IGR chamaram
+            atenção por parecerem muito distantes da realidade observada.
+          </p>
+
+          <p>
+            A primeira suspeita não foi imediatamente direcionada para os dados
+            brutos. Foi necessário revisar a metodologia utilizada para
+            entender se o problema estava na fonte, no processamento ou na
+            forma de agregação.
+          </p>
+
+          <p>
+            A investigação mostrou que o dataset já apresentava um IGR
+            calculado individualmente para cada operadora. Calcular uma média
+            simples desses valores dava o mesmo peso a carteiras de tamanhos
+            diferentes e não representava corretamente o índice agregado do
+            mercado.
+          </p>
+
+          <h2 id="correcao">
+            A correção metodológica
+          </h2>
+
+          <p>
+            Em vez de calcular a média aritmética dos índices individuais,
+            passei a agregar primeiro o total de reclamações e o total de
+            beneficiários por período.
+          </p>
+
+          <p>
+            O IGR agregado foi então calculado pela relação entre essas duas
+            grandezas:
+          </p>
+
+          <div class="note-callout">
+            <span class="note-callout__label">método adotado</span>
+
+            <p>
+              IGR = total de reclamações ÷ total de beneficiários × 100.000
+            </p>
+          </div>
+
+          <p>
+            Essa mudança garantiu que a comparação entre carteiras de tamanhos
+            diferentes utilizasse uma metodologia mais adequada e evitou que
+            médias simples distorcessem a leitura do indicador.
+          </p>
+
+          <p>
+            A revisão metodológica também reforçou uma preocupação essencial:
+            antes de comunicar um insight, é preciso entender exatamente como a
+            métrica foi construída.
+          </p>
+
+          <h2 id="descobertas">
+            O que os dados mostraram
+          </h2>
+
+          <p>
+            Entre 2015 e 2024, a base de beneficiários cresceu 21%, enquanto as
+            reclamações cresceram 296%. A série também revelou uma mudança de
+            comportamento a partir de 2020, sem retorno ao ritmo observado
+            anteriormente.
+          </p>
+
+          <p>
+            Essa associação foi tratada como uma hipótese exploratória, não como
+            uma relação causal comprovada. Os dados indicam uma mudança de
+            padrão, mas não permitem afirmar sozinhos o que a provocou.
+          </p>
+
+          <p>
+            A análise também mostrou que as operadoras de grande porte
+            representavam 9,89% dos registros, mas concentravam 82,54% das
+            reclamações — uma razão de concentração de 8,35 vezes.
+          </p>
+
+          <p>
+            A correlação entre quantidade de beneficiários e reclamações foi
+            moderada, com valor de 0,54. Isso indicou que o tamanho da carteira
+            não explicava sozinho o comportamento observado.
+          </p>
+
+          <p>
+            Outros achados incluíram diferenças relevantes entre assistência
+            médica e odontológica, identificação de outliers entre operadoras
+            ativas e a presença de operadoras em falência ou liquidação que
+            ainda impactavam beneficiários.
+          </p>
+
+          <h2 id="storytelling">
+            De análise a experiência visual
+          </h2>
+
+          <p>
+            Depois de compreender a base, revisar a metodologia e investigar as
+            hipóteses, transformei os resultados em um dashboard interativo
+            utilizando Streamlit e Plotly.
+          </p>
+
+          <p>
+            A aplicação foi organizada em diferentes visões: panorama geral,
+            evolução temporal, porte das operadoras, análise individual e
+            exploração dos dados.
+          </p>
+
+          <p>
+            O Data Storytelling ajudou a organizar a sequência da análise:
+            primeiro o contexto, depois a mudança de padrão, os recortes por
+            grupo e, finalmente, os outliers e comportamentos que exigiam
+            investigação adicional.
+          </p>
+
+          <p>
+            O projeto também recebeu testes automatizados, containerização com
+            Docker e um pipeline de CI/CD com GitHub Actions para validar o
+            código e realizar o deploy no Hugging Face Spaces.
+          </p>
+
+          <h2 id="aprendizado">
+            O aprendizado
+          </h2>
+
+          <p>
+            O ANS Complaints Insights me mostrou que um dashboard não começa
+            pela escolha do gráfico. Ele começa pela compreensão da pergunta,
+            da fonte, da métrica e das limitações dos dados.
+          </p>
+
+          <p>
+            Também reforçou que um projeto paralelo pode ter identidade
+            própria. Mesmo utilizando dados da mesma instituição que aparece em
+            outro trabalho, ele pode investigar um domínio diferente e produzir
+            aprendizados diferentes.
+          </p>
+
+          <p>
+            A principal lição foi entender que um insight só se torna confiável
+            quando sua metodologia, seus dados e suas hipóteses podem ser
+            explicados.
+          </p>
+
+          <p>
+            Para mim, esse projeto representa a combinação entre análise
+            exploratória, qualidade de dados e comunicação visual: transformar
+            uma pergunta em investigação e uma investigação em narrativa.
+          </p>
+
+          <footer class="note-footer">
+            <a
+              href="https://huggingface.co/spaces/marinizeeng/ans-complaints-insights"
+              target="_blank"
+              rel="noreferrer"
+            >
+              Acessar o dashboard
+              <span aria-hidden="true">↗</span>
+            </a>
+
+            <a
+              href="https://github.com/marinizedev/ans-complaints-insights"
+              target="_blank"
+              rel="noreferrer"
+            >
+              Ver o repositório
+              <span aria-hidden="true">↗</span>
+            </a>
+
+            <a href="/#cases">
+              Conhecer os cases públicos
+              <span aria-hidden="true">↗</span>
+            </a>
+
+            <a href="/">
+              Voltar ao portfólio
+              <span aria-hidden="true">↗</span>
+            </a>
+          </footer>
+        </article>
+      </div>
+    </main>
+
+    <footer class="note-site-footer">
+      <a href="/">
+        ← Voltar para Marinize Santana
+      </a>
+
+      <span>
+        investigar · validar · interpretar · comunicar
+      </span>
+    </footer>
+  </body>
+</html>
